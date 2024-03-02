@@ -7,17 +7,31 @@ body {background-color: black;}
 #age18   {color: lime;}
 p    {color: white;}
 </style>
+
 <script type="text/javascript">
+/* Get the documentElement (<html>) to display the page in fullscreen */
+var elem = document.documentElement;
 
-  var jetzt = new Date();
-  var Tag = jetzt.getDate();
-  var name = "url(Wallpapers/" + Tag + ".jpg)"
-  
-//  var myVar = setTimeout(setzeFokus, 1000);
+/* View in fullscreen */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
 
-function setzeFokus() {
-    document.gbqf.q.focus();
-    document.getElementById("qqq").focus();
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
 }
 // Refresh the page after a delay of X milliseconds
 setTimeout(function(){
@@ -45,5 +59,7 @@ window.onload = function () {
 </script>
 
 </HEAD>
-<BODY><p>Stichtag 16:</p><h1 id="age16"></h1></br></br></br><p>Stichtag 18:</p><h1 id="age18"></h1>
+<BODY><p>Stichtag 16:</p><h1 id="age16"></h1></br></br></br><p>Stichtag 18:</p><h1 id="age18"></h1></br>
+<button onclick="openFullscreen();">Vollbild</button>
+<button onclick="closeFullscreen();">Vollbild verlassen</button>
 </BODY></HTML>
