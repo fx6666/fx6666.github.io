@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<style>
+body {background-color: black;}
+#age16   {color: yellow;}
+#age18   {color: lime;}
+p    {color: white;}
+</style>
+<script type="text/javascript">
+
+  var jetzt = new Date();
+  var Tag = jetzt.getDate();
+  var name = "url(Wallpapers/" + Tag + ".jpg)"
+  
+//  var myVar = setTimeout(setzeFokus, 1000);
+
+function setzeFokus() {
+    document.gbqf.q.focus();
+    document.getElementById("qqq").focus();
+}
+// Refresh the page after a delay of X milliseconds
+setTimeout(function(){
+    location.reload();
+}, 3600000); // 3600000 milliseconds = 1 hour
+
+
+window.onload = function () {
+  const dateObj = new Date();
+  const month   = dateObj.getMonth() + 1; // months from 1-12
+  const day     = dateObj.getDate();
+  const year    = dateObj.getFullYear();
+
+  const year16 = year - 16;
+  const year18 = year - 18;
+  const pMonth        = month.toString().padStart(2,"0");
+  const pDay          = day.toString().padStart(2,"0");
+  const date16 = pDay + "." + pMonth + "." + year16;
+  const date18 = pDay + "." + pMonth + "." + year18;
+  const age16 = document.getElementById("age16")
+  age16.innerHTML = date16;
+  const age18 = document.getElementById("age18")
+  age18.innerHTML = date18;
+}
+</script>
+
+</HEAD>
+<BODY><p>Stichtag 16:</p><h1 id="age16"></h1></br></br></br><p>Stichtag 18:</p><h1 id="age18"></h1>
+</BODY></HTML>
