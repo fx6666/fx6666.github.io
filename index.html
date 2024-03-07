@@ -2,15 +2,47 @@
 <HTML>
 <HEAD>
 <style>
+img, a {border:none, outline: none;}
+.grid-container {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 100%;
+  place-items: center;
+}
 body {background-color: black;}
-#age16   {color: yellow;}
-#age18   {color: lime;}
-p    {color: white;}
+#age16 {
+    color: yellow;
+    font-size: 120px;
+}
+#age18 {
+    color: lime;
+    font-size: 120px;
+}
+#info {
+    color: white;
+    font-size: 120px;
+}
+.btnMax {
+            cursor: pointer;
+            border: 0px solid #ffffff;
+            background-color: black;
+            color: #ffffff;
+            display:block;
+}
+.btnMin {
+            cursor: pointer;
+            border: 0px solid #ffffff;
+            background-color: black;
+            color: #ffffff;
+            display:none;
+}
 </style>
 
 <script type="text/javascript">
 /* Get the documentElement (<html>) to display the page in fullscreen */
 var elem = document.documentElement;
+var zaehler = 0;
 
 /* View in fullscreen */
 function openFullscreen() {
@@ -21,6 +53,10 @@ function openFullscreen() {
   } else if (elem.msRequestFullscreen) { /* IE11 */
     elem.msRequestFullscreen();
   }
+  var x = document.getElementById("btnMax");
+  x.style.display = "none";
+  var y = document.getElementById("btnMin");
+  y.style.display = "block";
 }
 
 /* Close fullscreen */
@@ -32,34 +68,76 @@ function closeFullscreen() {
   } else if (document.msExitFullscreen) { /* IE11 */
     document.msExitFullscreen();
   }
+  var x = document.getElementById("btnMin");
+  x.style.display = "none";
+  var y = document.getElementById("btnMax");
+  y.style.display = "block";
 }
-// Refresh the page after a delay of X milliseconds
-setTimeout(function(){
-    location.reload();
-}, 3600000); // 3600000 milliseconds = 1 hour
+// Refresh the content after a delay of X milliseconds
+setInterval(function(){
+  let dateObj = new Date();
+  let month   = dateObj.getMonth() + 1; // returns 0 for january, hence +1
+  let day     = dateObj.getDate();
+  let year    = dateObj.getFullYear();
+
+  let year16 = year - 16;
+  let year18 = year - 18;
+  let padMonth        = month.toString().padStart(2,"0");
+  let padDay          = day.toString().padStart(2,"0");
+  let date16 = padDay + "." + padMonth + "." + year16;
+  let date18 = padDay + "." + padMonth + "." + year18;
+  let age16 = document.getElementById("age16")
+  age16.innerHTML = date16;
+  let age18 = document.getElementById("age18")
+  age18.innerHTML = date18;
+  let meinElement = document.getElementById("zaehler");
+  zaehler = zaehler + 1;
+  meinElement.innerHTML = zaehler;
+}, 3000); // 3600000 milliseconds = 1 hour
 
 
 window.onload = function () {
-  const dateObj = new Date();
-  const month   = dateObj.getMonth() + 1; // months from 1-12
-  const day     = dateObj.getDate();
-  const year    = dateObj.getFullYear();
+  let dateObj = new Date();
+  let month   = dateObj.getMonth() + 1; // returns 0 for january, hence +1
+  let day     = dateObj.getDate();
+  let year    = dateObj.getFullYear();
 
-  const year16 = year - 16;
-  const year18 = year - 18;
-  const pMonth        = month.toString().padStart(2,"0");
-  const pDay          = day.toString().padStart(2,"0");
-  const date16 = pDay + "." + pMonth + "." + year16;
-  const date18 = pDay + "." + pMonth + "." + year18;
-  const age16 = document.getElementById("age16")
+  let year16 = year - 16;
+  let year18 = year - 18;
+  let padMonth        = month.toString().padStart(2,"0");
+  let padDay          = day.toString().padStart(2,"0");
+  let date16 = padDay + "." + padMonth + "." + year16;
+  let date18 = padDay + "." + padMonth + "." + year18;
+  let age16 = document.getElementById("age16")
   age16.innerHTML = date16;
-  const age18 = document.getElementById("age18")
+  let age18 = document.getElementById("age18")
   age18.innerHTML = date18;
 }
 </script>
 
 </HEAD>
-<BODY><p>Stichtag 16:</p><h1 id="age16"></h1></br></br></br><p>Stichtag 18:</p><h1 id="age18"></h1></br>
-<button onclick="openFullscreen();">Vollbild</button>
-<button onclick="closeFullscreen();">Vollbild verlassen</button>
+<BODY>
+<div class="grid-container">
+  <div id="info">
+    <div>16:</div>
+    </br>
+    <div>18:</div>
+  </div>
+  <div id="info">
+    <div id="age16">
+    </div>
+    </br>
+    <div id="age18">
+    </div>
+  </div>
+  <div>
+  <button class="btnMax" id="btnMax" onclick="openFullscreen();">  
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATsSURBVHhe7Zy/S+tQGIZPqlTUScShUorOjm4ODkpHR7cODgU3QRD/DWfB0UUc3RQXBTc3ca3UUgdRp6KUm+TmwyPXe29+tDYn50u+94EPm9Bg6fukOSfnnDhKKT8oIJSS/guEAgGEAwGEAwGEAwGEAwGEAwGE47RaLdwHEIzjB+jXQCC4BAgHAggHAggHAggHAggnsRfQ7XZVv9/XWyBPlMtlNT8/r7fCiRWAwq9Wq/QWmjcAcobjOH6n03HiJIi9BNCZj/DzC2WX9OuNNoBwIIBwIIBwIIBwIIBwYruBDw8PanFxUW+BYZiYmPArlYrxHlS73fY9z4v8P61WSy0sLOitEEiAKPRcAdQPamtrS3+LZgnCDf3/X0UZxoFLgHAggHAggHAggCHe399d/ZI1EMAQQcucGmHsQTfQELVazVtbWxv6BFtfX/cajcbAx1E+lFMU6AbmqJaXl3+9vr56+usfCHQDC0IQvntxcVGamZnJdPgdAjDAVvgEBLBMs9l0r66uxmyET0AAi1D4h4eHY1NTU3rP/7y9vfnHx8ee3kwdCGCJr/BLpegIKPx6ve5dXl4aywkCWGCY8G9vb8f0LiNAgIzhFD4BATKEW/gEBMgIjuETECADuIZPQADDcA6fgAAG4R4+AQEMkYfwCQhggLyET0CAlMlT+AQESJG8hU9AgJSYnJz0d3Z2chU+gSlhKUIPYjg/P1dLS0t6zx9GCX92dtbb2NgINev09NTv9XqRQ8mYEpZxBRL4d3d3+hv8hKZ50XSvsPebrqQpYRDAQH2XwGb4VBDAUpEE19fXVsOnggAWix7SFLY/y0oSAL0AgwTfr37FFwggHAggHAggHAggHNYCzM3N8W9F5Ry2AtByqfv7e7W7u6v3ACN89gbDsXUfgG6efK2SdV3XDyQIfR8quZLuA4w0GDQ9Pe1vbm46evMvzs7OvJeXl6F/YejM/3ehpOd5am9vTx0cHOg9YFACAcwNBtHa9CjoMWlhx8TV9zP/X+iXoF6vhx6Hiq7c3AkMO/O/Q+PsJycnaBimDAsBksIn6DKwv7/vPj8/R74HDI91AQYNf3t72z06OmIzk6YoWBUA4dvHmgAInwdWBED4fMhcAITPi0wFQPj8yEwAhM+TTARA+HwxLgDC541RARA+f4wJQE+9Rvg5QA8KhTLKaGASvV7PbzabVhdNSCiWo4G0UHJ1dRVnPgMyF4DjEmnJZCoAwufHSFPCaKoRTTkaFHrq9U8efBwc4z0+Plq5XOUdysfKlLA0aTQa9Lj00M+Aii+WjcBhGR8fj+xKgtHAz6pwIIBwIIBwciHAx8cHNWiAAUbqBpZKJb9WqxltoNHHa7fb9DHREPwBRruBKP5ViG4gMAcEEA4EEA4EEA4EEE6sAOVyWemnXYIcQtlRhnHE3gcgut2u6vf7egvkCQqfHmEfR6IAoNigDSAcCCAcCCAcCCAcCCAcR4/4FZJBukFJFL0bTGPshRWAboR0Oh3npxJQ+NVqlXrKhZ2LUOhLAAU3ytlLxxY5fAJtAOFAAOFAAOFAAOFAAOEUWoBBxsPjkDAfwvp9gJubG1WpVPRWunC/EfT09KRWVlb0lh2sC5C4cKHAJC28yQK0AYQDAYQDAYQDAYQDAYRT6G4gd9ANBNbBJUA4EEA4EEA4EEA4EEA4EEA4EEA0Sv0G6iMuj1jyXk4AAAAASUVORK5CYII=">
+  </button>
+  <button class="btnMin" id="btnMin" onclick="closeFullscreen();">
+  <img src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAT4SURBVHhe7Z3PLjNRGIdPiUQiIiGiNBE2bCwk3YhYsnEHdjbuwS2wETcgkbgDlna1bbqyFLVAJaIRCdIw883LK58wzrSd6fkz7+9J3uiZaDG/R+ecmXOmBaVUGBUQSh9/BUKBAMKBAMKBAMKBAMKBAMKBAMIp3Nzc4DyAYAphBD8GAsEhQDgQQDgQQDgQQDgQQDiJo4BGo6EwUPCTQqGgisUit+LRCkDhl0olFQQBbwE+0dfXp66vr7USaA8B5AbC9xfKLundG30A4UAA4UAA4UAA4UAA4UAAjxgaGvoY2mUJBPCEsbGx8OzsLNjb28tWAjoR9Bc8WQRluaLwg1qt9s6xhPv7+2EkQez3/izKUAcEyLAolLm5uXB+fv5X9ff3xz4nqX6G/0W7EkAAgzUzM8N77jckQdxzdPVX+F9sbm7GPu97JQmAPoCj0DH/9PQ0XFxc/DOjnZ2dYHh4mFvdAQEcpJ3wm81msL6+rp6ennhLd0AAx2g3/LW1NVWtVlPnBwEcwnT4BARwBBvhExDAAWyFT0AAy9gMn4AAFrEdPgEBLOFC+AQEsIAr4RMQwDAuhU9AAIO4Fj4BAQyxsLDgXPgf8EWhWHA1sLPSXQ1M4vb2NiyXy+9xr5umcDXQA6Lw1erqqtn/fAYCWIbCp7f98/Nz3mIWCGAR2+ET2sWh9AtOTU1xCyQR9QHU5eUlt5LZ2tpSlUqFW+1zcXGh3t7euKUn6gOoyclJbsXw0RP4A3QCO6s0ncBO6GR6GTqBQAsEEA4EyJCBgQF+5A8QIEPoliy+gVFAhkxPT6t6vR5GIsSa0Gw21evrK7e6g+JaXl5WV1dXvEVP0igAAmQMSTA4OMit/9Bupvv1PD8/8xYzQADhJAmAPoBwIIBwIIBwIIBwIIBwMh0FTExMKLqFSVpGR0dpClXsiZWXl5dwaWmpcH9/z1uAjqRRQKZXA+kqlQnoLhxxPx/1uyhDHTgECMdLAVqtFj8CacE7gHAggHAyHQWMj49/jAJ0NzJ8fHxUtVqNW5/Mzs6q7e1tbiVD31+v17kFdBgdBXRTIyMjYaVS4Z/YHjT3Lu61UL/L6VFAFL46OTlRKysrvAWYxpoACN8NrAhAq2QRvhsYF+BribQufFolu7u7S8cw0GOMCtDJ+viDgwP/Zlh6iDEBXLw5AjAkAMJ3l57vbITvNj3d4QjffXq20xG+H/RkxyN8f8h85yN8v8g0AITvH5mFgPD9JJMgEL6/pA4D4ftN6kCOj48DhO8vqaeEbWxsqMPDw9jbo6QJnz4Pj147jqOjI+Pr7H3FyJSwKKiw1Wrxsz55eHh478W9b1GdVdKUsMzmBH6XAOG7U8YEoCIJ7u7uEL5DZVQAqujYHbsdZaeSBMi8Z572s2yBWTA0Ew4EEA4EEA4EEA4EEI5WALpHj26lL3Abyi7pBtbaawFEo9GgcwXcAj5B4ReLRW7FkygAyDd4fxcOBBAOBBAOBBAOBBBOgS/55pJ2hkFJ5H0YTGcJcvvX0YkQ+pyebiWg8EulkgqCgLfkj1wfAii4NP+99Nw8h0+gDyAcCCAcCCAcCCAcCCCcXAvQzvVwHRLmQ1g/D1CtVvVr11Lg+okgWntZLpe5ZQfrAtwkLV7MMS58NjP6AMKBAMKBAMKBAMKBAMLJ9TDQdTAMBNbBIUA4EEA4EEA4EEA4EEA4EEA4EEA0Sv0D5Ns9YO6iE/YAAAAASUVORK5CYII=">
+  </button>
+  </div>
+</div>
+<p id="zaehler">0</p></br>
 </BODY></HTML>
